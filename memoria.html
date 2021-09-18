@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Joguin da Memoria</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        var cartas = ["coelho.jpg", "coelho.jpg", "coelho2.jpg", "coelho2.jpg", "maior-coelho.jpg", "maior-coelho.jpg"];
+        shuffle(cartas);
+        var qtd = cartas.length;
+        var acerto = [];
+        var e1 = -1,
+            e2 = -1;
+        var c1 = "",
+            c2 = "";
+        var clique = 0;
+
+        function shuffle(array) {
+            var currentIndex = array.length,
+                randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]
+                ];
+            }
+            return array;
+        }
+        $(document).on('click', '.card', function () {
+            clique++;
+            var capa = $(this).html();
+            $(this).html("");
+            if (c1 == "" && clique == 1) {
+                c1 = $(this).attr('value');
+                e1 = $(this).attr('id');
+                console.log(e1);
+            } else if (c2 == "" && clique == 2) {
+                clique = 0;
+                c2 = $(this).attr('value');
+                e2 = $(this).attr('id');
+                console.log(e2);
+                var alvo = $(this);
+                // verificar acerto
+                if (c1 == c2) {
+                    alert("boa");
+                    c1 = "";
+                    c2 = "";
+                    e1 = -1;
+                    e2 = -1;
+                    //acerto
+                } else {
+                    //errou, zerou
+                    c1 = "";
+                    c2 = "";
+                    var t = setInterval(function () {
+                        $('#' + e1).html(capa);
+                        $('#' + e2).html(capa);
+                        e1 = -1;
+                        e2 = -1;
+                        clearInterval(t);
+                    }, 1000);
+                }
+            } else {
+                e1 = -1;
+                e2 = -1;
+                c1 = "";
+                c2 = "";
+            }
+        });
+        $(document).ready(function () {
+            for (i = 0; i < qtd; i++) {
+                var a = '<div id="' + i + '" value="' + cartas[i] + '" class="card" style=" background-image: url(\'' + cartas[i] + '\')"><img src="cartas.jpg" height="100%" width="100%"></div>';
+                $('body').append(a);
+            }
+        });
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100%;
+            background-image: linear-gradient( 60deg, rgb(80, 40, 226), rgb(35, 59, 35), rgb(98, 0, 255),rgb(35, 59, 35), rgb(71, 140, 230) );
+        }
+
+        .card {
+            width: 20vw;
+            height: 40vh;
+            border: 2px solid rgb(248, 14, 123);
+            margin-left: 10vw;
+            margin-top: 5vh;
+            float: left;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            -webkit-animation: fadeIn 3s ease-in-out;
+            -moz-animation: fadeIn 3s ease-in-out;
+            -o-animation: fadeIn 3s ease-in-out;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+</body>
+
+</html>
